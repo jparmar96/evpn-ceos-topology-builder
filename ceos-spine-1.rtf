@@ -1,0 +1,57 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red52\green52\blue52;
+}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c100000;\cssrgb\c26667\c26667\c26667;
+}
+\margl1440\margr1440\vieww10800\viewh25740\viewkind0
+\deftab720
+\pard\pardeftab720\sl400\partightenfactor0
+
+\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
+hostname ceos-spine-1\
+ip routing\
+service routing protocols model multi-agent\
+!\
+interface Ethernet 1\
+no switchport\
+ip address 10.0.1.0/31\
+interface Ethernet 2\
+no switchport\
+ip address 10.0.1.2/31\
+interface Ethernet 3\
+no switchport\
+ip address 10.0.1.4/31\
+interface Ethernet 4\
+no switchport\
+ip address 10.0.1.6/31\
+interface Loopback0\
+ip add 10.0.250.1/32\
+!\
+router bgp 65000\
+maximum-paths 4 ecmp 64\
+router-id 10.0.250.1\
+neighbor 10.0.1.1 remote-as 65001\
+neighbor 10.0.1.3 remote-as 65002\
+neighbor 10.0.1.5 remote-as 65003\
+neighbor 10.0.1.7 remote-as 65004\
+network 10.0.250.1/32\
+neighbor evpn peer group\
+neighbor evpn next-hop-unchanged\
+neighbor evpn update-source Loopback0\
+neighbor evpn ebgp-multihop 2\
+neighbor evpn send-community extended\
+neighbor evpn maximum-routes 12000 warning-only\
+neighbor 10.0.250.11 peer group evpn\
+neighbor 10.0.250.11 remote-as 65001\
+neighbor 10.0.250.12 peer group evpn\
+neighbor 10.0.250.12 remote-as 65002\
+neighbor 10.0.250.13 peer group evpn\
+neighbor 10.0.250.13 remote-as 65003\
+neighbor 10.0.250.14 peer group evpn\
+neighbor 10.0.250.14 remote-as 65004\
+!\
+address-family evpn\
+\'a0\'a0neighbor evpn activate\
+\pard\pardeftab720\partightenfactor0
+\cf2 !}
